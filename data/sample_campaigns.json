@@ -1,0 +1,230 @@
+{
+  "campaigns": [
+    {
+      "campaign_id": "casio_warranty_2025",
+      "name": "カシオ保証延長キャンペーン",
+      "brand": "CASIO",
+      "start_date": "2025-03-14",
+      "end_date": "2025-04-06",
+      "description": "フレッシャーズ需要の取り込みとして、通常1年の保証が2年へ無料にて延長されます。お客様負担無し、延長保証分の価格はメーカー負担です。",
+      "short_description": "保証期間1年延長無料",
+      "campaign_type": "warranty_extension",
+      "priority": 1,
+      "conditions": [
+        {
+          "type": "product_series",
+          "values": ["エディフィスカラーダイヤル", "オシアナス", "G-SHOCKフルメタル"]
+        },
+        {
+          "type": "model_specific",
+          "values": ["GMC-B2100", "GMW-B5000", "GM-B2100"]
+        }
+      ],
+      "exclusions": [
+        {
+          "type": "product_series",
+          "values": ["G-SHOCK（フルメタル以外）"]
+        }
+      ],
+      "benefits": [
+        {
+          "type": "warranty_extension",
+          "value": "1年",
+          "description": "通常有償となる延長保証1年分を無料"
+        }
+      ],
+      "notes": [
+        "レジ操作の際に、延長保証1年分を通常通り押して、金額を0円へ訂正してください",
+        "3年保証・4年保証へ延長する場合は、必ず差額を頂いてください（3年保証：差額1,100円、4年保証：差額2,200円）",
+        "対象商品を接客時には、保証が無料で延長されることを必ずお伝えください"
+      ],
+      "color_code": "#4CAF50"
+    },
+    {
+      "campaign_id": "citizen_warranty_2025",
+      "name": "シチズン保証延長キャンペーン",
+      "brand": "CITIZEN",
+      "start_date": "2025-02-21",
+      "end_date": "2025-03-23",
+      "description": "フレッシャーズ需要の取り込みとして「永く使える」を訴求。通常1年の保証が2年へ無料にて延長されます。",
+      "short_description": "保証期間1年延長無料",
+      "campaign_type": "warranty_extension",
+      "priority": 1,
+      "conditions": [
+        {
+          "type": "product_series",
+          "values": ["アテッサ", "xC", "シチズンコレクション"]
+        }
+      ],
+      "exclusions": [],
+      "benefits": [
+        {
+          "type": "warranty_extension",
+          "value": "1年",
+          "description": "通常有償となる延長保証1年分を無料"
+        }
+      ],
+      "notes": [
+        "レジ操作の際に、延長保証1年分を通常通り押して、金額を0円へ訂正してください",
+        "3年保証・4年保証へ延長する場合は、必ず差額を頂いてください（3年保証：差額1,100円、4年保証：差額2,200円）",
+        "対象商品を接客時には、保証が無料で延長されることを必ずお伝えください"
+      ],
+      "color_code": "#4CAF50"
+    },
+    {
+      "campaign_id": "citizen_interest_free_2025",
+      "name": "シチズン分割金利無料キャンペーン",
+      "brand": "CITIZEN",
+      "start_date": "2025-02-21",
+      "end_date": "2025-03-23",
+      "description": "フレッシャーズ需要での集客を見込み、単価UPや売上拡大を目指します。ジャックスローン通常20回までを金利無料、シチズン商品に限り30回まで金利無料です。",
+      "short_description": "分割払い最大30回まで金利無料",
+      "campaign_type": "interest_free",
+      "priority": 2,
+      "conditions": [
+        {
+          "type": "brand",
+          "values": ["CITIZEN"]
+        },
+        {
+          "type": "payment_method",
+          "values": ["ジャックスローン"]
+        }
+      ],
+      "exclusions": [],
+      "benefits": [
+        {
+          "type": "interest_free",
+          "value": "30回",
+          "description": "分割払い最大30回まで金利無料"
+        }
+      ],
+      "notes": [
+        "通常通りジャックスのページよりお客様入力などを実施してください",
+        "申し込みで不明なことがあれば、必ずジャックスの担当者へ確認してください",
+        "シチズン商品のみ、ジャックスローンでの購入で、売上の1%をインセンティブ支給"
+      ],
+      "color_code": "#2196F3"
+    },
+    {
+      "campaign_id": "freshers_discount_2025",
+      "name": "フレッシャーズ割引キャンペーン",
+      "brand": "ALL",
+      "start_date": "2025-02-25",
+      "end_date": "2025-04-06",
+      "description": "学生・新社会人の方を対象に、MAX20%OFFでの割引を実施します。卒業・入学・進学・就職など、3月は需要が高まります。",
+      "short_description": "学生・新社会人限定 最大20%OFF",
+      "campaign_type": "discount",
+      "priority": 3,
+      "conditions": [
+        {
+          "type": "customer_type",
+          "values": ["学生", "新社会人"]
+        }
+      ],
+      "exclusions": [
+        {
+          "type": "product_type",
+          "values": ["PB", "特価品", "割引禁止商品"]
+        },
+        {
+          "type": "purchase_type",
+          "values": ["ギフト購入（本人不在）"]
+        }
+      ],
+      "benefits": [
+        {
+          "type": "discount",
+          "value": "最大20%",
+          "description": "商品価格から最大20%割引"
+        }
+      ],
+      "notes": [
+        "学生・新社会人の見分けについては、自己申告となります",
+        "接客時に対象と思われるお客様であれば、ご案内して頂いて売上に繋げて頂いても構いません",
+        "学生本人の来店が必須となります。本人不在でのギフト購入は対象外となります",
+        "商品部の定める割引率の範囲以内で設定してください",
+        "各ブランドの割引率については、各バイヤーまでお問い合わせください"
+      ],
+      "color_code": "#FF9800"
+    },
+    {
+      "campaign_id": "seiko_gift_certificate_2025",
+      "name": "セイコー商品券プレゼントキャンペーン",
+      "brand": "SEIKO",
+      "start_date": "2025-03-20",
+      "end_date": "2025-04-13",
+      "description": "税込定価5万円以上の商品購入で商品券をプレゼントします。",
+      "short_description": "5万円以上購入で商品券プレゼント",
+      "campaign_type": "gift",
+      "priority": 2,
+      "conditions": [
+        {
+          "type": "brand",
+          "values": ["SEIKO"]
+        },
+        {
+          "type": "price_minimum",
+          "values": ["50000"]
+        }
+      ],
+      "exclusions": [],
+      "benefits": [
+        {
+          "type": "gift_certificate",
+          "value": "商品券",
+          "description": "商品券プレゼント"
+        }
+      ],
+      "notes": [
+        "税込定価5万円以上の商品が対象です",
+        "商品券の金額はバイヤーにご確認ください"
+      ],
+      "color_code": "#4CAF50"
+    },
+    {
+      "campaign_id": "anniversary_70th_2025",
+      "name": "創業70周年特別ご招待企画",
+      "brand": "ALL",
+      "start_date": "2025-03-20",
+      "end_date": "2025-03-23",
+      "description": "創業70周年特別企画として、自社催事の実施を行い、売上に繋げます。事前予約にてお買物券を配布し、期間中の売上とします。",
+      "short_description": "事前予約で約10%分のお買物券進呈",
+      "campaign_type": "special_event",
+      "priority": 1,
+      "conditions": [
+        {
+          "type": "reservation",
+          "values": ["2025-03-19まで"]
+        },
+        {
+          "type": "price_minimum",
+          "values": ["33000"]
+        }
+      ],
+      "exclusions": [
+        {
+          "type": "reservation_status",
+          "values": ["予約なし"]
+        }
+      ],
+      "benefits": [
+        {
+          "type": "shopping_coupon",
+          "value": "約10%",
+          "description": "販売価格の約10%分の自社お買物券"
+        }
+      ],
+      "notes": [
+        "3月19日までに事前予約されたお客様が対象です",
+        "対象商品は、売価税込み33,000円以上の腕時計（店頭割引後価格）です",
+        "当日予約なしでの来店は、対象外となります",
+        "お買物券のお渡し対象は、予約される商品の販売金額に応じて使用します",
+        "店頭での割引後の価格からの算出とし、売価の10%を超えないようにしてください",
+        "お買物券の種類は、3,000円券・5,000円券・10,000円券の3種類です",
+        "購入金額の10%以上の金額分のお買物券の配布は禁止です"
+      ],
+      "color_code": "#9C27B0"
+    }
+  ]
+}

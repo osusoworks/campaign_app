@@ -1,0 +1,268 @@
+{
+  "product_campaigns": [
+    {
+      "jan_code": "4549526123456",
+      "campaign_id": "casio_warranty_2025",
+      "is_applicable": true,
+      "application_reason": "エディフィスカラーダイヤルシリーズの対象商品",
+      "exclusion_reason": null,
+      "additional_notes": "お客様に保証延長について必ず案内してください"
+    },
+    {
+      "jan_code": "4549526123456",
+      "campaign_id": "freshers_discount_2025",
+      "is_applicable": true,
+      "application_reason": "学生・新社会人の方が対象",
+      "exclusion_reason": null,
+      "additional_notes": "学生・新社会人の方のみ適用可能です。本人確認をお願いします。"
+    },
+    {
+      "jan_code": "4549526123456",
+      "campaign_id": "anniversary_70th_2025",
+      "is_applicable": true,
+      "application_reason": "事前予約で対象",
+      "exclusion_reason": null,
+      "additional_notes": "3月19日までの事前予約が必要です"
+    },
+    {
+      "jan_code": "4549526234567",
+      "campaign_id": "casio_warranty_2025",
+      "is_applicable": true,
+      "application_reason": "G-SHOCKフルメタルの対象モデル",
+      "exclusion_reason": null,
+      "additional_notes": "お客様に保証延長について必ず案内してください"
+    },
+    {
+      "jan_code": "4549526234567",
+      "campaign_id": "freshers_discount_2025",
+      "is_applicable": true,
+      "application_reason": "学生・新社会人の方が対象",
+      "exclusion_reason": null,
+      "additional_notes": "学生・新社会人の方のみ適用可能です。本人確認をお願いします。"
+    },
+    {
+      "jan_code": "4549526234567",
+      "campaign_id": "anniversary_70th_2025",
+      "is_applicable": true,
+      "application_reason": "事前予約で対象",
+      "exclusion_reason": null,
+      "additional_notes": "3月19日までの事前予約が必要です"
+    },
+    {
+      "jan_code": "4549526345678",
+      "campaign_id": "casio_warranty_2025",
+      "is_applicable": true,
+      "application_reason": "オシアナスの全モデルが対象",
+      "exclusion_reason": null,
+      "additional_notes": "オシアナスはメーカー保証が3年ですが、外装に保証が付くことを訴求してください"
+    },
+    {
+      "jan_code": "4549526345678",
+      "campaign_id": "freshers_discount_2025",
+      "is_applicable": true,
+      "application_reason": "学生・新社会人の方が対象",
+      "exclusion_reason": null,
+      "additional_notes": "学生・新社会人の方のみ適用可能です。本人確認をお願いします。"
+    },
+    {
+      "jan_code": "4549526345678",
+      "campaign_id": "anniversary_70th_2025",
+      "is_applicable": true,
+      "application_reason": "事前予約で対象",
+      "exclusion_reason": null,
+      "additional_notes": "3月19日までの事前予約が必要です"
+    },
+    {
+      "jan_code": "4974375123456",
+      "campaign_id": "citizen_warranty_2025",
+      "is_applicable": true,
+      "application_reason": "アテッサシリーズの対象商品",
+      "exclusion_reason": null,
+      "additional_notes": "お客様に保証延長について必ず案内してください"
+    },
+    {
+      "jan_code": "4974375123456",
+      "campaign_id": "citizen_interest_free_2025",
+      "is_applicable": true,
+      "application_reason": "シチズン商品はジャックスローンで30回まで金利無料",
+      "exclusion_reason": null,
+      "additional_notes": "ジャックスローンでの購入で、売上の1%をインセンティブ支給"
+    },
+    {
+      "jan_code": "4974375123456",
+      "campaign_id": "freshers_discount_2025",
+      "is_applicable": true,
+      "application_reason": "学生・新社会人の方が対象",
+      "exclusion_reason": null,
+      "additional_notes": "学生・新社会人の方のみ適用可能です。本人確認をお願いします。"
+    },
+    {
+      "jan_code": "4974375123456",
+      "campaign_id": "anniversary_70th_2025",
+      "is_applicable": true,
+      "application_reason": "事前予約で対象",
+      "exclusion_reason": null,
+      "additional_notes": "3月19日までの事前予約が必要です"
+    },
+    {
+      "jan_code": "4974375234567",
+      "campaign_id": "citizen_warranty_2025",
+      "is_applicable": true,
+      "application_reason": "シチズンコレクションの対象商品",
+      "exclusion_reason": null,
+      "additional_notes": "お客様に保証延長について必ず案内してください"
+    },
+    {
+      "jan_code": "4974375234567",
+      "campaign_id": "citizen_interest_free_2025",
+      "is_applicable": true,
+      "application_reason": "シチズン商品はジャックスローンで30回まで金利無料",
+      "exclusion_reason": null,
+      "additional_notes": "ジャックスローンでの購入で、売上の1%をインセンティブ支給"
+    },
+    {
+      "jan_code": "4974375234567",
+      "campaign_id": "freshers_discount_2025",
+      "is_applicable": true,
+      "application_reason": "学生・新社会人の方が対象",
+      "exclusion_reason": null,
+      "additional_notes": "学生・新社会人の方のみ適用可能です。本人確認をお願いします。"
+    },
+    {
+      "jan_code": "4974375234567",
+      "campaign_id": "anniversary_70th_2025",
+      "is_applicable": true,
+      "application_reason": "事前予約で対象",
+      "exclusion_reason": null,
+      "additional_notes": "3月19日までの事前予約が必要です"
+    },
+    {
+      "jan_code": "4974375345678",
+      "campaign_id": "citizen_warranty_2025",
+      "is_applicable": true,
+      "application_reason": "xCシリーズの対象商品",
+      "exclusion_reason": null,
+      "additional_notes": "お客様に保証延長について必ず案内してください"
+    },
+    {
+      "jan_code": "4974375345678",
+      "campaign_id": "citizen_interest_free_2025",
+      "is_applicable": true,
+      "application_reason": "シチズン商品はジャックスローンで30回まで金利無料",
+      "exclusion_reason": null,
+      "additional_notes": "ジャックスローンでの購入で、売上の1%をインセンティブ支給"
+    },
+    {
+      "jan_code": "4974375345678",
+      "campaign_id": "freshers_discount_2025",
+      "is_applicable": true,
+      "application_reason": "学生・新社会人の方が対象",
+      "exclusion_reason": null,
+      "additional_notes": "学生・新社会人の方のみ適用可能です。本人確認をお願いします。"
+    },
+    {
+      "jan_code": "4974375345678",
+      "campaign_id": "anniversary_70th_2025",
+      "is_applicable": true,
+      "application_reason": "事前予約で対象",
+      "exclusion_reason": null,
+      "additional_notes": "3月19日までの事前予約が必要です"
+    },
+    {
+      "jan_code": "4954628123456",
+      "campaign_id": "seiko_gift_certificate_2025",
+      "is_applicable": true,
+      "application_reason": "セイコー商品で税込価格が5万円以上",
+      "exclusion_reason": null,
+      "additional_notes": "商品券プレゼントの対象商品です"
+    },
+    {
+      "jan_code": "4954628123456",
+      "campaign_id": "freshers_discount_2025",
+      "is_applicable": true,
+      "application_reason": "学生・新社会人の方が対象",
+      "exclusion_reason": null,
+      "additional_notes": "学生・新社会人の方のみ適用可能です。本人確認をお願いします。"
+    },
+    {
+      "jan_code": "4954628123456",
+      "campaign_id": "anniversary_70th_2025",
+      "is_applicable": true,
+      "application_reason": "事前予約で対象",
+      "exclusion_reason": null,
+      "additional_notes": "3月19日までの事前予約が必要です"
+    },
+    {
+      "jan_code": "4954628234567",
+      "campaign_id": "seiko_gift_certificate_2025",
+      "is_applicable": true,
+      "application_reason": "セイコー商品で税込価格が5万円以上",
+      "exclusion_reason": null,
+      "additional_notes": "商品券プレゼントの対象商品です"
+    },
+    {
+      "jan_code": "4954628234567",
+      "campaign_id": "freshers_discount_2025",
+      "is_applicable": true,
+      "application_reason": "学生・新社会人の方が対象",
+      "exclusion_reason": null,
+      "additional_notes": "学生・新社会人の方のみ適用可能です。本人確認をお願いします。"
+    },
+    {
+      "jan_code": "4954628234567",
+      "campaign_id": "anniversary_70th_2025",
+      "is_applicable": true,
+      "application_reason": "事前予約で対象",
+      "exclusion_reason": null,
+      "additional_notes": "3月19日までの事前予約が必要です"
+    },
+    {
+      "jan_code": "4954628345678",
+      "campaign_id": "seiko_gift_certificate_2025",
+      "is_applicable": true,
+      "application_reason": "セイコー商品で税込価格が5万円以上",
+      "exclusion_reason": null,
+      "additional_notes": "商品券プレゼントの対象商品です"
+    },
+    {
+      "jan_code": "4954628345678",
+      "campaign_id": "freshers_discount_2025",
+      "is_applicable": true,
+      "application_reason": "学生・新社会人の方が対象",
+      "exclusion_reason": null,
+      "additional_notes": "学生・新社会人の方のみ適用可能です。本人確認をお願いします。"
+    },
+    {
+      "jan_code": "4954628345678",
+      "campaign_id": "anniversary_70th_2025",
+      "is_applicable": true,
+      "application_reason": "事前予約で対象",
+      "exclusion_reason": null,
+      "additional_notes": "3月19日までの事前予約が必要です"
+    },
+    {
+      "jan_code": "4954628456789",
+      "campaign_id": "seiko_gift_certificate_2025",
+      "is_applicable": true,
+      "application_reason": "セイコー商品で税込価格が5万円以上",
+      "exclusion_reason": null,
+      "additional_notes": "商品券プレゼントの対象商品です"
+    },
+    {
+      "jan_code": "4954628456789",
+      "campaign_id": "freshers_discount_2025",
+      "is_applicable": true,
+      "application_reason": "学生・新社会人の方が対象",
+      "exclusion_reason": null,
+      "additional_notes": "学生・新社会人の方のみ適用可能です。本人確認をお願いします。"
+    },
+    {
+      "jan_code": "4954628456789",
+      "campaign_id": "anniversary_70th_2025",
+      "is_applicable": true,
+      "application_reason": "事前予約で対象",
+      "exclusion_reason": null,
+      "additional_notes": "3月19日までの事前予約が必要です"
+    }
+  ]
+}

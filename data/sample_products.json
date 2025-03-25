@@ -1,0 +1,164 @@
+{
+  "products": [
+    {
+      "jan_code": "4549526123456",
+      "name": "エディフィス カラーダイヤルシリーズ EFR-123",
+      "brand": "CASIO",
+      "category": "腕時計",
+      "sub_category": "エディフィス",
+      "price": 35000,
+      "tax_included_price": 38500,
+      "image_url": "images/edifice_123.jpg",
+      "description": "カラーダイヤルシリーズの腕時計。ビジネスシーンに映えるデザイン。",
+      "specifications": {
+        "model_number": "EFR-123",
+        "color": "シルバー/ブルー",
+        "features": ["ソーラー充電", "防水"]
+      }
+    },
+    {
+      "jan_code": "4549526234567",
+      "name": "G-SHOCK フルメタル GMW-B5000",
+      "brand": "CASIO",
+      "category": "腕時計",
+      "sub_category": "G-SHOCK",
+      "price": 64000,
+      "tax_included_price": 70400,
+      "image_url": "images/gshock_b5000.jpg",
+      "description": "フルメタルボディのG-SHOCK。耐衝撃構造と高級感を両立。",
+      "specifications": {
+        "model_number": "GMW-B5000",
+        "color": "シルバー",
+        "features": ["タフソーラー", "電波受信", "Bluetooth"]
+      }
+    },
+    {
+      "jan_code": "4549526345678",
+      "name": "オシアナス OCW-S100",
+      "brand": "CASIO",
+      "category": "腕時計",
+      "sub_category": "オシアナス",
+      "price": 74000,
+      "tax_included_price": 81400,
+      "image_url": "images/oceanus_s100.jpg",
+      "description": "オシアナスの定番モデル。エレガントなデザインと高機能を両立。",
+      "specifications": {
+        "model_number": "OCW-S100",
+        "color": "ブルー",
+        "features": ["タフソーラー", "電波受信", "サファイアガラス"]
+      }
+    },
+    {
+      "jan_code": "4974375123456",
+      "name": "アテッサ AT8040",
+      "brand": "CITIZEN",
+      "category": "腕時計",
+      "sub_category": "アテッサ",
+      "price": 68000,
+      "tax_included_price": 74800,
+      "image_url": "images/attesa_8040.jpg",
+      "description": "シチズンの高級ライン、アテッサシリーズ。ビジネスマンに人気。",
+      "specifications": {
+        "model_number": "AT8040",
+        "color": "シルバー/ブラック",
+        "features": ["エコドライブ", "電波時計", "チタン素材"]
+      }
+    },
+    {
+      "jan_code": "4974375234567",
+      "name": "シチズンコレクション BM7360",
+      "brand": "CITIZEN",
+      "category": "腕時計",
+      "sub_category": "シチズンコレクション",
+      "price": 32000,
+      "tax_included_price": 35200,
+      "image_url": "images/collection_7360.jpg",
+      "description": "シンプルで使いやすいシチズンの定番コレクション。",
+      "specifications": {
+        "model_number": "BM7360",
+        "color": "シルバー",
+        "features": ["エコドライブ", "サファイアガラス"]
+      }
+    },
+    {
+      "jan_code": "4974375345678",
+      "name": "xC クロスシー ES9440",
+      "brand": "CITIZEN",
+      "category": "腕時計",
+      "sub_category": "xC",
+      "price": 52000,
+      "tax_included_price": 57200,
+      "image_url": "images/xc_9440.jpg",
+      "description": "女性向けの洗練されたデザインのxCシリーズ。",
+      "specifications": {
+        "model_number": "ES9440",
+        "color": "ピンクゴールド",
+        "features": ["エコドライブ", "電波時計", "サファイアガラス"]
+      }
+    },
+    {
+      "jan_code": "4954628123456",
+      "name": "セイコー プレザージュ SARX033",
+      "brand": "SEIKO",
+      "category": "腕時計",
+      "sub_category": "プレザージュ",
+      "price": 85000,
+      "tax_included_price": 93500,
+      "image_url": "images/presage_033.jpg",
+      "description": "日本の美意識を表現した機械式時計。高級感あふれるデザイン。",
+      "specifications": {
+        "model_number": "SARX033",
+        "color": "シルバー",
+        "features": ["自動巻き", "サファイアガラス", "シースルーバック"]
+      }
+    },
+    {
+      "jan_code": "4954628234567",
+      "name": "セイコー プロスペックス SBDX023",
+      "brand": "SEIKO",
+      "category": "腕時計",
+      "sub_category": "プロスペックス",
+      "price": 110000,
+      "tax_included_price": 121000,
+      "image_url": "images/prospex_023.jpg",
+      "description": "プロフェッショナルスペックのダイバーズウォッチ。",
+      "specifications": {
+        "model_number": "SBDX023",
+        "color": "ブラック",
+        "features": ["自動巻き", "200m防水", "逆回転防止ベゼル"]
+      }
+    },
+    {
+      "jan_code": "4954628345678",
+      "name": "セイコー ルキア SSQV071",
+      "brand": "SEIKO",
+      "category": "腕時計",
+      "sub_category": "ルキア",
+      "price": 59000,
+      "tax_included_price": 64900,
+      "image_url": "images/lukia_071.jpg",
+      "description": "女性のためのエレガントなソーラー電波時計。",
+      "specifications": {
+        "model_number": "SSQV071",
+        "color": "ピンクゴールド",
+        "features": ["ソーラー電波", "サファイアガラス", "10気圧防水"]
+      }
+    },
+    {
+      "jan_code": "4954628456789",
+      "name": "セイコー アストロン SBXC003",
+      "brand": "SEIKO",
+      "category": "腕時計",
+      "sub_category": "アストロン",
+      "price": 187000,
+      "tax_included_price": 205700,
+      "image_url": "images/astron_003.jpg",
+      "description": "GPSソーラーウォッチの最高峰。世界中どこでも正確な時刻を表示。",
+      "specifications": {
+        "model_number": "SBXC003",
+        "color": "ブラック/シルバー",
+        "features": ["GPSソーラー", "サファイアガラス", "チタン素材"]
+      }
+    }
+  ]
+}

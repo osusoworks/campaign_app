@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>キャンペーン確認ツール</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- ヘッダー -->
+        <header class="app-header">
+            <h1>キャンペーン確認ツール</h1>
+        </header>
+
+        <!-- メインコンテンツ -->
+        <main class="app-main">
+            <!-- JANコード入力セクション -->
+            <section class="jan-input-section">
+                <div class="input-container">
+                    <input type="text" id="jan-code-input" placeholder="JANコードを入力" maxlength="13">
+                    <button id="scan-button" class="icon-button">
+                        <span class="material-icons">qr_code_scanner</span>
+                    </button>
+                    <button id="search-button" class="primary-button">検索</button>
+                </div>
+                <div class="barcode-scanner-container" id="barcode-scanner-container" style="display: none;">
+                    <div id="barcode-scanner"></div>
+                    <button id="close-scanner" class="secondary-button">スキャナーを閉じる</button>
+                </div>
+            </section>
+
+            <!-- 商品情報セクション（初期状態では非表示） -->
+            <section class="product-info-section" id="product-info-section" style="display: none;">
+                <div class="product-header">
+                    <div class="product-image-container">
+                        <img id="product-image" src="" alt="商品画像">
+                    </div>
+                    <div class="product-details">
+                        <h2 id="product-name"></h2>
+                        <p class="product-brand" id="product-brand"></p>
+                        <p class="product-category" id="product-category"></p>
+                        <p class="product-price" id="product-price"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- キャンペーン情報セクション（初期状態では非表示） -->
+            <section class="campaigns-section" id="campaigns-section" style="display: none;">
+                <h2 class="section-title">適用可能なキャンペーン</h2>
+                <div class="campaigns-container" id="applicable-campaigns">
+                    <!-- 適用可能なキャンペーンがここに動的に追加されます -->
+                </div>
+
+                <h2 class="section-title">適用対象外のキャンペーン</h2>
+                <div class="campaigns-container" id="non-applicable-campaigns">
+                    <!-- 適用対象外のキャンペーンがここに動的に追加されます -->
+                </div>
+            </section>
+
+            <!-- 商品が見つからない場合のメッセージ（初期状態では非表示） -->
+            <section class="not-found-section" id="not-found-section" style="display: none;">
+                <div class="not-found-message">
+                    <span class="material-icons">search_off</span>
+                    <p>商品が見つかりませんでした。</p>
+                    <p>JANコードを確認して再度お試しください。</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- フッター -->
+        <footer class="app-footer">
+            <p>© 2025 キャンペーン確認ツール</p>
+        </footer>
+    </div>
+
+    <!-- テンプレート：キャンペーンカード -->
+    <template id="campaign-card-template">
+        <div class="campaign-card">
+            <div class="campaign-header">
+                <h3 class="campaign-title"></h3>
+                <span class="campaign-period"></span>
+            </div>
+            <div class="campaign-content">
+                <p class="campaign-description"></p>
+                <div class="campaign-notes">
+                    <h4>注意事項：</h4>
+                    <ul class="notes-list"></ul>
+                </div>
+                <div class="campaign-reason"></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/test-helpers.js"></script>
+</body>
+</html>
