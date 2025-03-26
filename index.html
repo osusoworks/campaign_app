@@ -4,101 +4,1305 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>キャンペーン確認ツール</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* リセットCSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .search-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .search-form input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .search-form button {
+            padding: 0.75rem 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-form button.scan-button {
+            background-color: #2196F3;
+        }
+        
+        .test-jan-container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .test-jan-container h2 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+        
+        .test-jan-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.5rem;
+        }
+        
+        .test-jan-button {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-align: center;
+            color: white;
+        }
+        
+        .test-jan-button:nth-child(1) { background-color: #E91E63; }
+        .test-jan-button:nth-child(2) { background-color: #00BCD4; }
+        .test-jan-button:nth-child(3) { background-color: #FF9800; }
+        .test-jan-button:nth-child(4) { background-color: #673AB7; }
+        .test-jan-button:nth-child(5) { background-color: #FF5722; }
+        .test-jan-button:nth-child(6) { background-color: #4CAF50; }
+        .test-jan-button:nth-child(7) { background-color: #9C27B0; }
+        .test-jan-button:nth-child(8) { background-color: #3F51B5; }
+        .test-jan-button:nth-child(9) { background-color: #F44336; }
+        .test-jan-button:nth-child(10) { background-color: #009688; }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .product-header img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .product-details {
+            flex: 1;
+        }
+        
+        .product-details h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .product-details p {
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+            color: #666;
+        }
+        
+        .campaigns-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        .campaigns-container h2 {
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+            color: #333;
+        }
+        
+        .campaign-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #ddd;
+        }
+        
+        .campaign-card.applicable {
+            border-left-color: #4CAF50;
+        }
+        
+        .campaign-card.non-applicable {
+            border-left-color: #F44336;
+        }
+        
+        .campaign-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .campaign-period {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .campaign-description {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+        
+        .campaign-notes {
+            background-color: #f9f9f9;
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        
+        .campaign-notes h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .notes-list {
+            list-style-position: inside;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        
+        .notes-list li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .more-button {
+            background-color: transparent;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+            color: #666;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        
+        .campaign-reason {
+            font-size: 0.9rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        
+        .applicable-reason {
+            color: #2E7D32;
+            background-color: #E8F5E9;
+        }
+        
+        .non-applicable-reason {
+            color: #C62828;
+            background-color: #FFEBEE;
+        }
+        
+        .no-campaigns {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+            padding: 0.5rem;
+        }
+        
+        .not-found-container {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .not-found-icon {
+            font-size: 3rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+        
+        .barcode-scanner-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .barcode-scanner-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .barcode-scanner {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .close-scanner {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: white;
+            color: #333;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .scanner-guide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(76, 175, 80, 0.5);
+            border-radius: 20px;
+            box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+        
+        .scanner-guide::before,
+        .scanner-guide::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: #4CAF50;
+            border-style: solid;
+        }
+        
+        .scanner-guide::before {
+            top: -2px;
+            left: -2px;
+            border-width: 2px 0 0 2px;
+            border-radius: 5px 0 0 0;
+        }
+        
+        .scanner-guide::after {
+            bottom: -2px;
+            right: -2px;
+            border-width: 0 2px 2px 0;
+            border-radius: 0 0 5px 0;
+        }
+        
+        .scanner-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #4CAF50;
+            top: 50%;
+            animation: scan 2s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { top: 20%; }
+            50% { top: 80%; }
+            100% { top: 20%; }
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+            color: #666;
+            font-size: 0.8rem;
+            background-color: #333;
+            color: white;
+        }
+        
+        /* アクセシビリティ機能 */
+        .accessibility-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+        
+        .accessibility-button {
+            background-color: transparent;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            margin-left: 0.5rem;
+            font-size: 0.8rem;
+            color: #666;
+            cursor: pointer;
+        }
+        
+        /* フォントサイズ変更 */
+        body.font-large {
+            font-size: 1.2em;
+        }
+        
+        body.font-larger {
+            font-size: 1.4em;
+        }
+        
+        /* ハイコントラストモード */
+        body.high-contrast {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        body.high-contrast .card,
+        body.high-contrast .search-container,
+        body.high-contrast .campaign-card,
+        body.high-contrast .not-found-container {
+            background-color: #222;
+            color: #fff;
+        }
+        
+        body.high-contrast .campaign-notes {
+            background-color: #333;
+        }
+        
+        body.high-contrast .notes-list,
+        body.high-contrast .campaign-period,
+        body.high-contrast .product-details p {
+            color: #ccc;
+        }
+        
+        body.high-contrast .applicable-reason {
+            background-color: #1B5E20;
+            color: #fff;
+        }
+        
+        body.high-contrast .non-applicable-reason {
+            background-color: #B71C1C;
+            color: #fff;
+        }
+        
+        /* レスポンシブデザイン */
+        @media (max-width: 600px) {
+            .product-header {
+                flex-direction: column;
+            }
+            
+            .product-header img {
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+            }
+            
+            .test-jan-buttons {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+        
+        /* スキャナーのスタイル */
+        #interactive.viewport {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        #interactive.viewport canvas, video {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .drawingBuffer {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .scanner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+        
+        .scan-region-highlight {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 30%;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+            z-index: 11;
+        }
+        
+        .scan-region-highlight-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: #4CAF50;
+            stroke-width: 2;
+            stroke-linecap: round;
+            z-index: 12;
+        }
+        
+        .scan-message {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-size: 1rem;
+            z-index: 13;
+        }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- ヘッダー -->
-        <header class="app-header">
-            <h1>キャンペーン確認ツール</h1>
-        </header>
-
-        <!-- メインコンテンツ -->
-        <main class="app-main">
-            <!-- JANコード入力セクション -->
-            <section class="jan-input-section">
-                <div class="input-container">
-                    <input type="text" id="jan-code-input" placeholder="JANコードを入力" maxlength="13">
-                    <button id="scan-button" class="icon-button">
-                        <span class="material-icons">qr_code_scanner</span>
-                    </button>
-                    <button id="search-button" class="primary-button">検索</button>
-                </div>
-                <div class="barcode-scanner-container" id="barcode-scanner-container" style="display: none;">
-                    <div id="barcode-scanner"></div>
-                    <button id="close-scanner" class="secondary-button">スキャナーを閉じる</button>
-                </div>
-            </section>
-
-            <!-- 商品情報セクション（初期状態では非表示） -->
-            <section class="product-info-section" id="product-info-section" style="display: none;">
-                <div class="product-header">
-                    <div class="product-image-container">
-                        <img id="product-image" src="" alt="商品画像">
-                    </div>
-                    <div class="product-details">
-                        <h2 id="product-name"></h2>
-                        <p class="product-brand" id="product-brand"></p>
-                        <p class="product-category" id="product-category"></p>
-                        <p class="product-price" id="product-price"></p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- キャンペーン情報セクション（初期状態では非表示） -->
-            <section class="campaigns-section" id="campaigns-section" style="display: none;">
-                <h2 class="section-title">適用可能なキャンペーン</h2>
-                <div class="campaigns-container" id="applicable-campaigns">
-                    <!-- 適用可能なキャンペーンがここに動的に追加されます -->
-                </div>
-
-                <h2 class="section-title">適用対象外のキャンペーン</h2>
-                <div class="campaigns-container" id="non-applicable-campaigns">
-                    <!-- 適用対象外のキャンペーンがここに動的に追加されます -->
-                </div>
-            </section>
-
-            <!-- 商品が見つからない場合のメッセージ（初期状態では非表示） -->
-            <section class="not-found-section" id="not-found-section" style="display: none;">
-                <div class="not-found-message">
-                    <span class="material-icons">search_off</span>
-                    <p>商品が見つかりませんでした。</p>
-                    <p>JANコードを確認して再度お試しください。</p>
-                </div>
-            </section>
-        </main>
-
-        <!-- フッター -->
-        <footer class="app-footer">
-            <p>© 2025 キャンペーン確認ツール</p>
-        </footer>
-    </div>
-
-    <!-- テンプレート：キャンペーンカード -->
-    <template id="campaign-card-template">
-        <div class="campaign-card">
-            <div class="campaign-header">
-                <h3 class="campaign-title"></h3>
-                <span class="campaign-period"></span>
-            </div>
-            <div class="campaign-content">
-                <p class="campaign-description"></p>
-                <div class="campaign-notes">
-                    <h4>注意事項：</h4>
-                    <ul class="notes-list"></ul>
-                </div>
-                <div class="campaign-reason"></div>
+    <header>
+        <h1>キャンペーン確認ツール</h1>
+    </header>
+    
+    <main>
+        <div class="accessibility-controls">
+            <button id="font-size-toggle" class="accessibility-button">文字サイズ変更</button>
+            <button id="contrast-toggle" class="accessibility-button">コントラスト切替</button>
+        </div>
+        
+        <div class="search-container">
+            <div class="search-form">
+                <input type="text" id="jan-code-input" placeholder="JANコードを入力">
+                <button id="scan-button" class="scan-button">QRコード</button>
+                <button id="search-button" class="search-button">検索</button>
             </div>
         </div>
-    </template>
-
-    <!-- JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/test-helpers.js"></script>
+        
+        <div class="test-jan-container">
+            <h2>テスト用JANコード</h2>
+            <div class="test-jan-buttons">
+                <button class="test-jan-button" data-jan="4549526123456">エディフィス</button>
+                <button class="test-jan-button" data-jan="4549526789012">G-SHOCK</button>
+                <button class="test-jan-button" data-jan="4549526345678">オシアナス</button>
+                <button class="test-jan-button" data-jan="4974375123456">アテッサ</button>
+                <button class="test-jan-button" data-jan="4974375789012">シチズンコレクション</button>
+                <button class="test-jan-button" data-jan="4974375345678">xC クロスシー</button>
+                <button class="test-jan-button" data-jan="4954628123456">セイコー プレザージュ</button>
+                <button class="test-jan-button" data-jan="4954628789012">セイコー プロスペックス</button>
+                <button class="test-jan-button" data-jan="4954628345678">セイコー ルキア</button>
+                <button class="test-jan-button" data-jan="4954628901234">セイコー アストロン</button>
+            </div>
+        </div>
+        
+        <section id="product-info-section" style="display: none;">
+            <div class="card">
+                <div class="product-header">
+                    <img id="product-image" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiNlZWUiLz48dGV4dCB4PSI1MCIgeT0iNTAiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0ibW9ub3NwYWNlLCBzYW5zLXNlcmlmIiBmaWxsPSIjYWFhIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=" alt="商品画像">
+                    <div class="product-details">
+                        <h2 id="product-name"></h2>
+                        <p><strong>ブランド:</strong> <span id="product-brand"></span></p>
+                        <p><strong>カテゴリ:</strong> <span id="product-category"></span></p>
+                        <p><strong>価格:</strong> <span id="product-price"></span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="campaigns-section" style="display: none;">
+            <div class="campaigns-container">
+                <h2>適用可能なキャンペーン</h2>
+                <div id="applicable-campaigns"></div>
+                
+                <h2>適用対象外のキャンペーン</h2>
+                <div id="non-applicable-campaigns"></div>
+            </div>
+        </section>
+        
+        <section id="not-found-section" style="display: none;">
+            <div class="not-found-container">
+                <div class="not-found-icon">🔍</div>
+                <p>商品が見つかりませんでした。</p>
+                <p>JANコードを確認して再度お試しください。</p>
+            </div>
+        </section>
+        
+        <div id="barcode-scanner-container" class="barcode-scanner-container">
+            <div class="barcode-scanner-content">
+                <div id="interactive" class="viewport">
+                    <div class="scan-region-highlight"></div>
+                    <div class="scan-message">JANコードをスキャンしてください</div>
+                </div>
+                <button id="close-scanner" class="close-scanner">×</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        © 2025 キャンペーン確認ツール
+    </footer>
+    
+    <!-- QuaggaJS ライブラリ -->
+    <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
+    
+    <script>
+        // 商品データ
+        const productsData = [
+            {
+                "jan": "4549526123456",
+                "name": "エディフィス カラーダイヤルシリーズ EFR-123",
+                "brand": "CASIO",
+                "category": "腕時計 / エディフィス",
+                "price": 38500,
+                "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDUiIGZpbGw9IiNlOTFlNjMiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzIiBmaWxsPSIjMDAwIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIzMCIgZmlsbD0iIzAwMCIgdHJhbnNmb3JtPSJyb3RhdGUoLTMwLCA1MCwgNTApIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIyMCIgZmlsbD0iIzAwMCIgdHJhbnNmb3JtPSJyb3RhdGUoNjAsIDUwLCA1MCkiLz48dGV4dCB4PSI1MCIgeT0iNzUiIGZvbnQtc2l6ZT0iOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPkVESUZJQ0U8L3RleHQ+PC9zdmc+"
+            },
+            {
+                "jan": "4549526789012",
+                "name": "G-SHOCK フルメタル GMW-B5000",
+                "brand": "CASIO",
+                "category": "腕時計 / G-SHOCK",
+                "price": 64000,
+                "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHJlY3QgeD0iMTAiIHk9IjIwIiB3aWR0aD0iODAiIGhlaWdodD0iNjAiIGZpbGw9IiM2NjYiIHJ4PSI1IiByeT0iNSIvPjxyZWN0IHg9IjE1IiB5PSIyNSIgd2lkdGg9IjcwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjMzMzIiByeD0iMyIgcnk9IjMiLz48cmVjdCB4PSIyMCIgeT0iMzAiIHdpZHRoPSI2MCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzIyMiIvPjx0ZXh0IHg9IjUwIiB5PSI0NSIgZm9udC1zaXplPSI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjYWFhIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj4xMjo0NTwvdGV4dD48dGV4dCB4PSI1MCIgeT0iNjUiIGZvbnQtc2l6ZT0iOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2FhYSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPkctU0hPQ0s8L3RleHQ+PC9zdmc+"
+            },
+            {
+                "jan": "4549526345678",
+                "name": "オシアナス OCW-S100",
+                "brand": "CASIO",
+                "category": "腕時計 / オシアナス",
+                "price": 74000,
+                "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDUiIGZpbGw9IiMwMGJjZDQiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzIiBmaWxsPSIjMDAwIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIzMCIgZmlsbD0iIzAwMCIgdHJhbnNmb3JtPSJyb3RhdGUoLTEyMCwgNTAsIDUwKSIvPjxyZWN0IHg9IjQ5IiB5PSIyMCIgd2lkdGg9IjIiIGhlaWdodD0iMjAiIGZpbGw9IiMwMDAiIHRyYW5zZm9ybT0icm90YXRlKDkwLCA1MCwgNTApIi8+PHRleHQgeD0iNTAiIHk9IjI1IiBmb250LXNpemU9IjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj4xMjwvdGV4dD48dGV4dCB4PSI3NSIgeT0iNTAiIGZvbnQtc2l6ZT0iOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPjM8L3RleHQ+PHRleHQgeD0iNTAiIHk9Ijc1IiBmb250LXNpemU9IjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj42PC90ZXh0Pjx0ZXh0IHg9IjI1IiB5PSI1MCIgZm9udC1zaXplPSI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiI+OTwvdGV4dD48dGV4dCB4PSI1MCIgeT0iODUiIGZvbnQtc2l6ZT0iNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPk9DRUFOVVM8L3RleHQ+PC9zdmc+"
+            },
+            {
+                "jan": "4974375123456",
+                "name": "アテッサ AT8040",
+                "brand": "CITIZEN",
+                "category": "腕時計 / アテッサ",
+                "price": 74800,
+                "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDUiIGZpbGw9IiM2NzNhYjciLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzIiBmaWxsPSIjMDAwIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIzMCIgZmlsbD0iIzAwMCIgdHJhbnNmb3JtPSJyb3RhdGUoLTYwLCA1MCwgNTApIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIyMCIgZmlsbD0iIzAwMCIgdHJhbnNmb3JtPSJyb3RhdGUoMTgwLCA1MCwgNTApIi8+PHRleHQgeD0iNTAiIHk9Ijc1IiBmb250LXNpemU9IjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj5BVFRFWkE8L3RleHQ+PC9zdmc+"
+            },
+            {
+                "jan": "4974375789012",
+                "name": "シチズンコレクション BM6770",
+                "brand": "CITIZEN",
+                "category": "腕時計 / シチズンコレクション",
+                "price": 29000,
+                "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDUiIGZpbGw9IiNmZjU3MjIiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzIiBmaWxsPSIjMDAwIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIzMCIgZmlsbD0iIzAwMCIvPjxyZWN0IHg9IjQ5IiB5PSIyMCIgd2lkdGg9IjIiIGhlaWdodD0iMjUiIGZpbGw9IiMwMDAiIHRyYW5zZm9ybT0icm90YXRlKDkwLCA1MCwgNTApIi8+PHRleHQgeD0iNTAiIHk9IjI1IiBmb250LXNpemU9IjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj4xMjwvdGV4dD48dGV4dCB4PSI3NSIgeT0iNTAiIGZvbnQtc2l6ZT0iOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPjM8L3RleHQ+PHRleHQgeD0iNTAiIHk9Ijc1IiBmb250LXNpemU9IjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj42PC90ZXh0Pjx0ZXh0IHg9IjI1IiB5PSI1MCIgZm9udC1zaXplPSI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiI+OTwvdGV4dD48dGV4dCB4PSI1MCIgeT0iODUiIGZvbnQtc2l6ZT0iNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPkNJVElaRU48L3RleHQ+PC9zdmc+"
+            },
+            {
+                "jan": "4974375345678",
+                "name": "xC クロスシー EC1144",
+                "brand": "CITIZEN",
+                "category": "腕時計 / xC",
+                "price": 52000,
+                "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDUiIGZpbGw9IiM0Y2FmNTAiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzIiBmaWxsPSIjMDAwIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIzMCIgZmlsbD0iIzAwMCIgdHJhbnNmb3JtPSJyb3RhdGUoLTMwLCA1MCwgNTApIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIyMCIgZmlsbD0iIzAwMCIgdHJhbnNmb3JtPSJyb3RhdGUoNjAsIDUwLCA1MCkiLz48dGV4dCB4PSI1MCIgeT0iNzUiIGZvbnQtc2l6ZT0iOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPnhDPC90ZXh0Pjwvc3ZnPg=="
+            },
+            {
+                "jan": "4954628123456",
+                "name": "セイコー プレザージュ SARX033",
+                "brand": "SEIKO",
+                "category": "腕時計 / プレザージュ",
+                "price": 85000,
+                "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDUiIGZpbGw9IiM5YzI3YjAiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzIiBmaWxsPSIjMDAwIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIzMCIgZmlsbD0iIzAwMCIgdHJhbnNmb3JtPSJyb3RhdGUoLTEyMCwgNTAsIDUwKSIvPjxyZWN0IHg9IjQ5IiB5PSIyMCIgd2lkdGg9IjIiIGhlaWdodD0iMjAiIGZpbGw9IiMwMDAiIHRyYW5zZm9ybT0icm90YXRlKDkwLCA1MCwgNTApIi8+PHRleHQgeD0iNTAiIHk9IjI1IiBmb250LXNpemU9IjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj4xMjwvdGV4dD48dGV4dCB4PSI3NSIgeT0iNTAiIGZvbnQtc2l6ZT0iOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPjM8L3RleHQ+PHRleHQgeD0iNTAiIHk9Ijc1IiBmb250LXNpemU9IjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj42PC90ZXh0Pjx0ZXh0IHg9IjI1IiB5PSI1MCIgZm9udC1zaXplPSI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiI+OTwvdGV4dD48dGV4dCB4PSI1MCIgeT0iODUiIGZvbnQtc2l6ZT0iNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPlBSRVNBR0U8L3RleHQ+PC9zdmc+"
+            },
+            {
+                "jan": "4954628789012",
+                "name": "セイコー プロスペックス SBDC001",
+                "brand": "SEIKO",
+                "category": "腕時計 / プロスペックス",
+                "price": 63000,
+                "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDUiIGZpbGw9IiMzZjUxYjUiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzIiBmaWxsPSIjMDAwIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIzMCIgZmlsbD0iIzAwMCIgdHJhbnNmb3JtPSJyb3RhdGUoLTYwLCA1MCwgNTApIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIyMCIgZmlsbD0iIzAwMCIgdHJhbnNmb3JtPSJyb3RhdGUoMTgwLCA1MCwgNTApIi8+PHRleHQgeD0iNTAiIHk9Ijc1IiBmb250LXNpemU9IjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj5QUk9TUEVYPC90ZXh0Pjwvc3ZnPg=="
+            },
+            {
+                "jan": "4954628345678",
+                "name": "セイコー ルキア SSQV001",
+                "brand": "SEIKO",
+                "category": "腕時計 / ルキア",
+                "price": 57000,
+                "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDUiIGZpbGw9IiNmNDQzMzYiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzIiBmaWxsPSIjMDAwIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIzMCIgZmlsbD0iIzAwMCIvPjxyZWN0IHg9IjQ5IiB5PSIyMCIgd2lkdGg9IjIiIGhlaWdodD0iMjUiIGZpbGw9IiMwMDAiIHRyYW5zZm9ybT0icm90YXRlKDkwLCA1MCwgNTApIi8+PHRleHQgeD0iNTAiIHk9IjI1IiBmb250LXNpemU9IjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj4xMjwvdGV4dD48dGV4dCB4PSI3NSIgeT0iNTAiIGZvbnQtc2l6ZT0iOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPjM8L3RleHQ+PHRleHQgeD0iNTAiIHk9Ijc1IiBmb250LXNpemU9IjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj42PC90ZXh0Pjx0ZXh0IHg9IjI1IiB5PSI1MCIgZm9udC1zaXplPSI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiI+OTwvdGV4dD48dGV4dCB4PSI1MCIgeT0iODUiIGZvbnQtc2l6ZT0iNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPkxVS0lBPC90ZXh0Pjwvc3ZnPg=="
+            },
+            {
+                "jan": "4954628901234",
+                "name": "セイコー アストロン SBXC001",
+                "brand": "SEIKO",
+                "category": "腕時計 / アストロン",
+                "price": 187000,
+                "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDUiIGZpbGw9IiMwMDk2ODgiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iIzMzMyIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzIiBmaWxsPSIjZmZmIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIzMCIgZmlsbD0iI2ZmZiIgdHJhbnNmb3JtPSJyb3RhdGUoLTMwLCA1MCwgNTApIi8+PHJlY3QgeD0iNDkiIHk9IjIwIiB3aWR0aD0iMiIgaGVpZ2h0PSIyMCIgZmlsbD0iI2ZmZiIgdHJhbnNmb3JtPSJyb3RhdGUoNjAsIDUwLCA1MCkiLz48dGV4dCB4PSI1MCIgeT0iNzUiIGZvbnQtc2l6ZT0iNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZpbGw9IiNmZmYiPkFTVFJPTjwvdGV4dD48L3N2Zz4="
+            }
+        ];
+        
+        // キャンペーンデータ
+        const campaignsData = [
+            {
+                "id": "casio_warranty",
+                "name": "カシオ保証延長キャンペーン",
+                "period": "2025-03-14 ~ 2025-04-06",
+                "description": "保証期間1年延長無料",
+                "notes": [
+                    "レジ操作の際に、延長保証1年分を通常通り押して、金額を0円で訂正してください",
+                    "3年保証・4年保証へ延長する場合は、必ず差額を頂いてください（3年保証：差額1,100円、4年保証：差額2,200円）",
+                    "対象商品を接客時には、保証が無料で延長されることを必ずお伝えください"
+                ]
+            },
+            {
+                "id": "citizen_warranty",
+                "name": "シチズン保証延長キャンペーン",
+                "period": "2025-02-21 ~ 2025-03-23",
+                "description": "保証期間1年延長無料",
+                "notes": [
+                    "レジ操作の際に、延長保証1年分を通常通り押して、金額を0円で訂正してください",
+                    "3年保証・4年保証へ延長する場合は、必ず差額を頂いてください（3年保証：差額1,100円、4年保証：差額2,200円）",
+                    "対象商品を接客時には、保証が無料で延長されることを必ずお伝えください"
+                ]
+            },
+            {
+                "id": "citizen_interest_free",
+                "name": "シチズン分割金利無料キャンペーン",
+                "period": "2025-02-21 ~ 2025-03-23",
+                "description": "分割払い最大30回まで金利無料",
+                "notes": [
+                    "通常通りジャックスのページよりお客様入力などを実施してください",
+                    "申し込みで不明なことがあれば、必ずジャックスの担当者へ確認してください",
+                    "シチズン商品のみ、ジャックスローンでの購入で、売上の1%をインセンティブ支給"
+                ]
+            },
+            {
+                "id": "freshers_discount",
+                "name": "フレッシャーズ割引キャンペーン",
+                "period": "2025-02-25 ~ 2025-04-06",
+                "description": "学生・新社会人限定 最大20%OFF",
+                "notes": [
+                    "学生・新社会人の見分けについては、自己申告となります",
+                    "接客時に対象と思われるお客様であれば、ご案内して頂いて売上に繋げて頂いても構いません",
+                    "学生本人の来店が必須となります。本人不在でのギフト購入は対象外となります"
+                ]
+            },
+            {
+                "id": "seiko_gift_card",
+                "name": "セイコー商品券プレゼント",
+                "period": "2025-03-01 ~ 2025-03-31",
+                "description": "対象商品購入で5,000円分の商品券プレゼント",
+                "notes": [
+                    "対象商品購入時に商品券をお渡しください",
+                    "在庫には限りがあります。なくなり次第終了となります",
+                    "商品券の使用期限は2025年6月30日までです"
+                ]
+            },
+            {
+                "id": "anniversary_70th",
+                "name": "創業70周年特別ご招待企画",
+                "period": "2025-03-20 ~ 2025-03-23",
+                "description": "事前予約で約10%分のお買物券進呈",
+                "notes": [
+                    "3月19日までに事前予約されたお客様が対象です",
+                    "対象商品は、売価税込み33,000円以上の腕時計（店頭割引後価格）です",
+                    "当日予約なしでの来店は、対象外となります"
+                ]
+            }
+        ];
+        
+        // 商品-キャンペーン関連データ
+        const productCampaignsData = [
+            {
+                "jan": "4549526123456",
+                "campaigns": [
+                    {
+                        "campaign_id": "casio_warranty",
+                        "applicable": true,
+                        "reason": "エディフィスカラーダイヤルシリーズの対象商品"
+                    },
+                    {
+                        "campaign_id": "freshers_discount",
+                        "applicable": true,
+                        "reason": "学生・新社会人の方が対象"
+                    },
+                    {
+                        "campaign_id": "anniversary_70th",
+                        "applicable": true,
+                        "reason": "事前予約で対象"
+                    }
+                ]
+            },
+            {
+                "jan": "4549526789012",
+                "campaigns": [
+                    {
+                        "campaign_id": "casio_warranty",
+                        "applicable": true,
+                        "reason": "G-SHOCKフルメタルシリーズの対象商品"
+                    },
+                    {
+                        "campaign_id": "freshers_discount",
+                        "applicable": true,
+                        "reason": "学生・新社会人の方が対象"
+                    },
+                    {
+                        "campaign_id": "anniversary_70th",
+                        "applicable": true,
+                        "reason": "事前予約で対象"
+                    }
+                ]
+            },
+            {
+                "jan": "4549526345678",
+                "campaigns": [
+                    {
+                        "campaign_id": "casio_warranty",
+                        "applicable": true,
+                        "reason": "オシアナスシリーズの対象商品"
+                    },
+                    {
+                        "campaign_id": "freshers_discount",
+                        "applicable": false,
+                        "reason": "高級ラインのため対象外"
+                    },
+                    {
+                        "campaign_id": "anniversary_70th",
+                        "applicable": true,
+                        "reason": "事前予約で対象"
+                    }
+                ]
+            },
+            {
+                "jan": "4974375123456",
+                "campaigns": [
+                    {
+                        "campaign_id": "citizen_warranty",
+                        "applicable": true,
+                        "reason": "アテッサシリーズの対象商品"
+                    },
+                    {
+                        "campaign_id": "citizen_interest_free",
+                        "applicable": true,
+                        "reason": "シチズン商品はジャックスローンで30回まで金利無料"
+                    },
+                    {
+                        "campaign_id": "freshers_discount",
+                        "applicable": true,
+                        "reason": "学生・新社会人の方が対象"
+                    },
+                    {
+                        "campaign_id": "anniversary_70th",
+                        "applicable": true,
+                        "reason": "事前予約で対象"
+                    }
+                ]
+            },
+            {
+                "jan": "4974375789012",
+                "campaigns": [
+                    {
+                        "campaign_id": "citizen_warranty",
+                        "applicable": true,
+                        "reason": "シチズンコレクションの対象商品"
+                    },
+                    {
+                        "campaign_id": "citizen_interest_free",
+                        "applicable": true,
+                        "reason": "シチズン商品はジャックスローンで30回まで金利無料"
+                    },
+                    {
+                        "campaign_id": "freshers_discount",
+                        "applicable": true,
+                        "reason": "学生・新社会人の方が対象"
+                    },
+                    {
+                        "campaign_id": "anniversary_70th",
+                        "applicable": false,
+                        "reason": "価格帯が対象外"
+                    }
+                ]
+            },
+            {
+                "jan": "4974375345678",
+                "campaigns": [
+                    {
+                        "campaign_id": "citizen_warranty",
+                        "applicable": true,
+                        "reason": "xCシリーズの対象商品"
+                    },
+                    {
+                        "campaign_id": "citizen_interest_free",
+                        "applicable": true,
+                        "reason": "シチズン商品はジャックスローンで30回まで金利無料"
+                    },
+                    {
+                        "campaign_id": "freshers_discount",
+                        "applicable": true,
+                        "reason": "学生・新社会人の方が対象"
+                    },
+                    {
+                        "campaign_id": "anniversary_70th",
+                        "applicable": true,
+                        "reason": "事前予約で対象"
+                    }
+                ]
+            },
+            {
+                "jan": "4954628123456",
+                "campaigns": [
+                    {
+                        "campaign_id": "seiko_gift_card",
+                        "applicable": true,
+                        "reason": "セイコープレザージュの対象商品"
+                    },
+                    {
+                        "campaign_id": "freshers_discount",
+                        "applicable": true,
+                        "reason": "学生・新社会人の方が対象"
+                    },
+                    {
+                        "campaign_id": "anniversary_70th",
+                        "applicable": true,
+                        "reason": "事前予約で対象"
+                    }
+                ]
+            },
+            {
+                "jan": "4954628789012",
+                "campaigns": [
+                    {
+                        "campaign_id": "seiko_gift_card",
+                        "applicable": true,
+                        "reason": "セイコープロスペックスの対象商品"
+                    },
+                    {
+                        "campaign_id": "freshers_discount",
+                        "applicable": true,
+                        "reason": "学生・新社会人の方が対象"
+                    },
+                    {
+                        "campaign_id": "anniversary_70th",
+                        "applicable": true,
+                        "reason": "事前予約で対象"
+                    }
+                ]
+            },
+            {
+                "jan": "4954628345678",
+                "campaigns": [
+                    {
+                        "campaign_id": "seiko_gift_card",
+                        "applicable": true,
+                        "reason": "セイコールキアの対象商品"
+                    },
+                    {
+                        "campaign_id": "freshers_discount",
+                        "applicable": true,
+                        "reason": "学生・新社会人の方が対象"
+                    },
+                    {
+                        "campaign_id": "anniversary_70th",
+                        "applicable": true,
+                        "reason": "事前予約で対象"
+                    }
+                ]
+            },
+            {
+                "jan": "4954628901234",
+                "campaigns": [
+                    {
+                        "campaign_id": "seiko_gift_card",
+                        "applicable": false,
+                        "reason": "高級ラインのため対象外"
+                    },
+                    {
+                        "campaign_id": "freshers_discount",
+                        "applicable": false,
+                        "reason": "高級ラインのため対象外"
+                    },
+                    {
+                        "campaign_id": "anniversary_70th",
+                        "applicable": true,
+                        "reason": "事前予約で対象"
+                    }
+                ]
+            }
+        ];
+        
+        // DOM要素
+        const janCodeInput = document.getElementById('jan-code-input');
+        const searchButton = document.getElementById('search-button');
+        const scanButton = document.getElementById('scan-button');
+        const closeScanner = document.getElementById('close-scanner');
+        const barcodeScannerContainer = document.getElementById('barcode-scanner-container');
+        const productInfoSection = document.getElementById('product-info-section');
+        const campaignsSection = document.getElementById('campaigns-section');
+        const notFoundSection = document.getElementById('not-found-section');
+        const fontSizeToggle = document.getElementById('font-size-toggle');
+        const contrastToggle = document.getElementById('contrast-toggle');
+        
+        // 検索ボタンのイベントリスナー
+        searchButton.addEventListener('click', function() {
+            searchProduct();
+        });
+        
+        // JANコード入力欄でEnterキーを押したときの処理
+        janCodeInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchProduct();
+            }
+        });
+        
+        // スキャンボタンのイベントリスナー
+        scanButton.addEventListener('click', function() {
+            startBarcodeScanner();
+        });
+        
+        // スキャナーを閉じるボタンのイベントリスナー
+        closeScanner.addEventListener('click', function() {
+            stopBarcodeScanner();
+        });
+        
+        // 商品検索関数
+        function searchProduct() {
+            const janCode = janCodeInput.value.trim();
+            if (!janCode) {
+                alert('JANコードを入力してください');
+                return;
+            }
+            
+            const product = productsData.find(p => p.jan === janCode);
+            if (product) {
+                displayProductInfo(product);
+                displayCampaignInfo(product.jan);
+            } else {
+                showNotFoundMessage();
+            }
+        }
+        
+        // 商品情報表示関数
+        function displayProductInfo(product) {
+            // 商品情報セクションを表示
+            productInfoSection.style.display = 'block';
+            campaignsSection.style.display = 'block';
+            notFoundSection.style.display = 'none';
+            
+            // 商品情報を設定
+            document.getElementById('product-name').textContent = product.name;
+            document.getElementById('product-brand').textContent = product.brand;
+            document.getElementById('product-category').textContent = product.category;
+            document.getElementById('product-price').textContent = `¥${product.price.toLocaleString()} (税込)`;
+            
+            // 商品画像を設定
+            const productImage = document.getElementById('product-image');
+            if (product.image) {
+                productImage.src = product.image;
+                productImage.alt = product.name;
+            } else {
+                productImage.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiNlZWUiLz48dGV4dCB4PSI1MCIgeT0iNTAiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LWZhbWlseT0ibW9ub3NwYWNlLCBzYW5zLXNlcmlmIiBmaWxsPSIjYWFhIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
+                productImage.alt = 'No Image';
+            }
+        }
+        
+        // キャンペーン情報表示関数
+        function displayCampaignInfo(janCode) {
+            const applicableCampaignsContainer = document.getElementById('applicable-campaigns');
+            const nonApplicableCampaignsContainer = document.getElementById('non-applicable-campaigns');
+            
+            // コンテナをクリア
+            applicableCampaignsContainer.innerHTML = '';
+            nonApplicableCampaignsContainer.innerHTML = '';
+            
+            // 商品に関連するキャンペーン情報を取得
+            const productCampaigns = productCampaignsData.find(pc => pc.jan === janCode);
+            
+            if (productCampaigns && productCampaigns.campaigns) {
+                // 適用可能なキャンペーンと適用対象外のキャンペーンを分ける
+                const applicable = [];
+                const nonApplicable = [];
+                
+                productCampaigns.campaigns.forEach(pc => {
+                    const campaign = campaignsData.find(c => c.id === pc.campaign_id);
+                    if (campaign) {
+                        if (pc.applicable) {
+                            applicable.push({ campaign, reason: pc.reason });
+                        } else {
+                            nonApplicable.push({ campaign, reason: pc.reason });
+                        }
+                    }
+                });
+                
+                // 適用可能なキャンペーンを表示
+                if (applicable.length > 0) {
+                    applicable.forEach(item => {
+                        const campaignCard = createCampaignCard(item.campaign, item.reason, true);
+                        applicableCampaignsContainer.appendChild(campaignCard);
+                    });
+                } else {
+                    applicableCampaignsContainer.innerHTML = '<p class="no-campaigns">適用可能なキャンペーンはありません。</p>';
+                }
+                
+                // 適用対象外のキャンペーンを表示
+                if (nonApplicable.length > 0) {
+                    nonApplicable.forEach(item => {
+                        const campaignCard = createCampaignCard(item.campaign, item.reason, false);
+                        nonApplicableCampaignsContainer.appendChild(campaignCard);
+                    });
+                } else {
+                    nonApplicableCampaignsContainer.innerHTML = '<p class="no-campaigns">適用対象外のキャンペーンはありません。</p>';
+                }
+            } else {
+                // キャンペーン情報がない場合
+                applicableCampaignsContainer.innerHTML = '<p class="no-campaigns">適用可能なキャンペーンはありません。</p>';
+                nonApplicableCampaignsContainer.innerHTML = '<p class="no-campaigns">適用対象外のキャンペーンはありません。</p>';
+            }
+        }
+        
+        // キャンペーンカード作成関数
+        function createCampaignCard(campaign, reason, isApplicable) {
+            const card = document.createElement('div');
+            card.className = `campaign-card ${isApplicable ? 'applicable' : 'non-applicable'}`;
+            
+            const title = document.createElement('h3');
+            title.className = 'campaign-title';
+            title.textContent = campaign.name;
+            
+            const period = document.createElement('p');
+            period.className = 'campaign-period';
+            period.textContent = `期間: ${campaign.period}`;
+            
+            const description = document.createElement('p');
+            description.className = 'campaign-description';
+            description.textContent = campaign.description;
+            
+            const notesContainer = document.createElement('div');
+            notesContainer.className = 'campaign-notes';
+            
+            const notesTitle = document.createElement('h4');
+            notesTitle.textContent = '注意事項:';
+            
+            const notesList = document.createElement('ul');
+            notesList.className = 'notes-list';
+            
+            campaign.notes.forEach((note, index) => {
+                if (index < 2 || campaign.notes.length <= 3) {
+                    const li = document.createElement('li');
+                    li.textContent = note;
+                    notesList.appendChild(li);
+                }
+            });
+            
+            const reasonElement = document.createElement('p');
+            reasonElement.className = `campaign-reason ${isApplicable ? 'applicable-reason' : 'non-applicable-reason'}`;
+            reasonElement.textContent = `適用理由: ${reason}`;
+            
+            notesContainer.appendChild(notesTitle);
+            notesContainer.appendChild(notesList);
+            
+            card.appendChild(title);
+            card.appendChild(period);
+            card.appendChild(description);
+            card.appendChild(notesContainer);
+            card.appendChild(reasonElement);
+            
+            // 注意事項が3つ以上ある場合は「もっと見る」ボタンを追加
+            if (campaign.notes.length > 3) {
+                const moreButton = document.createElement('button');
+                moreButton.textContent = 'もっと見る';
+                moreButton.className = 'more-button';
+                moreButton.addEventListener('click', function() {
+                    // 既存の注意事項をクリア
+                    notesList.innerHTML = '';
+                    
+                    // すべての注意事項を表示
+                    campaign.notes.forEach(note => {
+                        const li = document.createElement('li');
+                        li.textContent = note;
+                        notesList.appendChild(li);
+                    });
+                    
+                    // ボタンを非表示
+                    this.style.display = 'none';
+                });
+                
+                notesContainer.appendChild(moreButton);
+            }
+            
+            return card;
+        }
+        
+        // 商品が見つからない場合のメッセージ表示
+        function showNotFoundMessage() {
+            productInfoSection.style.display = 'none';
+            campaignsSection.style.display = 'none';
+            notFoundSection.style.display = 'block';
+        }
+        
+        // テスト用JANコードボタンのイベントリスナー設定
+        document.querySelectorAll('.test-jan-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const jan = this.getAttribute('data-jan');
+                janCodeInput.value = jan;
+                searchProduct();
+            });
+        });
+        
+        // アクセシビリティ機能：文字サイズ変更
+        let fontSizeState = 0; // 0: 通常, 1: 大, 2: より大
+        fontSizeToggle.addEventListener('click', function() {
+            fontSizeState = (fontSizeState + 1) % 3;
+            document.body.classList.remove('font-large', 'font-larger');
+            
+            if (fontSizeState === 1) {
+                document.body.classList.add('font-large');
+                this.textContent = '文字サイズ：大';
+            } else if (fontSizeState === 2) {
+                document.body.classList.add('font-larger');
+                this.textContent = '文字サイズ：より大';
+            } else {
+                this.textContent = '文字サイズ変更';
+            }
+        });
+        
+        // アクセシビリティ機能：コントラスト切替
+        let highContrast = false;
+        contrastToggle.addEventListener('click', function() {
+            highContrast = !highContrast;
+            if (highContrast) {
+                document.body.classList.add('high-contrast');
+                this.textContent = '通常コントラスト';
+            } else {
+                document.body.classList.remove('high-contrast');
+                this.textContent = 'コントラスト切替';
+            }
+        });
+        
+        // バーコードスキャナー関連の機能
+        let quaggaInitialized = false;
+        
+        // バーコードスキャナーを開始する関数
+        function startBarcodeScanner() {
+            barcodeScannerContainer.style.display = 'block';
+            
+            if (!quaggaInitialized) {
+                initQuagga();
+            } else {
+                Quagga.start();
+            }
+        }
+        
+        // バーコードスキャナーを停止する関数
+        function stopBarcodeScanner() {
+            barcodeScannerContainer.style.display = 'none';
+            if (quaggaInitialized) {
+                Quagga.stop();
+            }
+        }
+        
+        // QuaggaJSの初期化
+        function initQuagga() {
+            if (!window.Quagga) {
+                alert('バーコードスキャン機能を利用するには、インターネット接続が必要です。');
+                return;
+            }
+            
+            Quagga.init({
+                inputStream: {
+                    name: "Live",
+                    type: "LiveStream",
+                    target: document.querySelector('#interactive'),
+                    constraints: {
+                        width: { min: 640 },
+                        height: { min: 480 },
+                        facingMode: "environment" // リアカメラを使用
+                    }
+                },
+                locator: {
+                    patchSize: "medium",
+                    halfSample: true
+                },
+                numOfWorkers: 4,
+                decoder: {
+                    readers: [
+                        "ean_reader", // EAN-13 (JAN-13)
+                        "ean_8_reader" // EAN-8 (JAN-8)
+                    ]
+                },
+                locate: true
+            }, function(err) {
+                if (err) {
+                    console.error(err);
+                    alert('カメラの起動に失敗しました。カメラへのアクセス許可を確認してください。');
+                    return;
+                }
+                
+                quaggaInitialized = true;
+                Quagga.start();
+                
+                // バーコードが検出されたときの処理
+                Quagga.onDetected(function(result) {
+                    const code = result.codeResult.code;
+                    
+                    // JANコードの形式チェック（13桁または8桁の数字）
+                    if (/^\d{8}$|^\d{13}$/.test(code)) {
+                        janCodeInput.value = code;
+                        stopBarcodeScanner();
+                        searchProduct();
+                    }
+                });
+            });
+        }
+    </script>
 </body>
 </html>
