@@ -3,12 +3,15 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>キャンペーン判定アプリ</title>
+  <title>キャンペーン確認アプリ</title>
 </head>
 <body>
-  <h1>商品スキャン判定</h1>
-  <script>
-    const productsData = [
+  <h1>JANコードでキャンペーン判定</h1>
+  <input id="janInput" placeholder="JANコードを入力またはスキャン" oninput="onJanInput()" />
+  <div id="result"></div>
+
+<script>
+const productsData = [
   {
     "jan": "4954628467904",
     "name": "SBXY087",
@@ -6046,6 +6049,80 @@
     "brand": "その他"
   }
 ];
-  </script>
+
+const campaignsData = [
+  { id: "casio_warranty", name: "カシオ保証延長" },
+  { id: "citizen_warranty", name: "シチズン保証延長" },
+  { id: "citizen_interest_free", name: "シチズン分割無金利" },
+  { id: "freshers_discount", name: "フレッシャーズ割" },
+  { id: "anniversary_70th", name: "70周年特招会" }
+];
+
+function getCampaignApplicability(product) {
+  const applicable = [];
+  const nonApplicable = [];
+  const gshockModels = ['GMC-B2100', 'GMW-B5000', 'GM-B2100'];
+
+  if (product.brand === 'CASIO' &&
+      (product.name.includes('エディフィス') ||
+       (product.name.includes('G-SHOCK') && gshockModels.some(m => product.name.includes(m))) ||
+       product.name.includes('オシアナス'))) {
+    applicable.push({ campaign_id: 'casio_warranty' });
+  } else {
+    nonApplicable.push({ campaign_id: 'casio_warranty' });
+  }
+
+  const citizenSeries = ['アテッサ', 'xC', 'シチズンコレクション'];
+  if (product.brand === 'CITIZEN' && citizenSeries.some(s => product.name.includes(s))) {
+    applicable.push({ campaign_id: 'citizen_warranty' });
+  } else {
+    nonApplicable.push({ campaign_id: 'citizen_warranty' });
+  }
+
+  if (product.brand === 'CITIZEN') {
+    applicable.push({ campaign_id: 'citizen_interest_free' });
+  } else {
+    nonApplicable.push({ campaign_id: 'citizen_interest_free' });
+  }
+
+  applicable.push({ campaign_id: 'freshers_discount' });
+
+  if (product.price >= 33000) {
+    applicable.push({ campaign_id: 'anniversary_70th' });
+  } else {
+    nonApplicable.push({ campaign_id: 'anniversary_70th' });
+  }
+
+  return { applicable, nonApplicable };
+}
+
+function onJanInput() {
+  const jan = document.getElementById("janInput").value.trim();
+  const product = productsData.find(p => p.jan === jan);
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerHTML = "";
+
+  if (!product) {
+    resultDiv.innerHTML = "<p>該当商品が見つかりません。</p>";
+    return;
+  }
+
+  const { applicable, nonApplicable } = getCampaignApplicability(product);
+  const name = product.name;
+  const brand = product.brand;
+  const price = product.price;
+
+  let html = `<h2>CASIO</h2><p>ブランド: CASIO / 税込価格: ¥0</p>`;
+  html += "<h3>適用されるキャンペーン</h3><ul>" +
+    applicable.map(c => "<li>" + campaignsData.find(cd => cd.id === c.campaign_id).name + "</li>").join('') +
+    "</ul>";
+
+  html += "<h3>対象外のキャンペーン</h3><ul>" +
+    nonApplicable.map(c => "<li>" + campaignsData.find(cd => cd.id === c.campaign_id).name + "</li>").join('') +
+    "</ul>";
+
+  resultDiv.innerHTML = html;
+}
+</script>
 </body>
 </html>
