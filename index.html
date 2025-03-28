@@ -6049,43 +6049,57 @@ const productsData = [
   }
 ];
 
+
 function getCampaignApplicability(product) {
   const applicable = [];
   const nonApplicable = [];
+
   const gshockModels = ['GMC-B2100', 'GMW-B5000', 'GM-B2100'];
 
-  if (product.brand === 'CASIO' &&
-      (product.name.includes('エディフィス') ||
-       (product.name.includes('G-SHOCK') && gshockModels.some(m => product.name.includes(m))) ||
-       product.name.includes('オシアナス'))) {
-    applicable.push({ campaign_id: 'casio_warranty' });
+  function extractModelBase(name) {
+    const parts = name.split('-');
+    return parts.length >= 2 ? parts[0] + '-' + parts[1] : name;
+  }
+
+  const baseModel = extractModelBase(product.name);
+
+  if (
+      product.brand === 'CASIO' &&
+      (
+          product.name.includes('エディフィス') ||
+          (product.name.includes('G-SHOCK') && gshockModels.includes(baseModel)) ||
+          product.name.includes('オシアナス')
+      )
+  ) {
+      applicable.push({ campaign_id: 'casio_warranty' });
   } else {
-    nonApplicable.push({ campaign_id: 'casio_warranty' });
+      nonApplicable.push({ campaign_id: 'casio_warranty' });
   }
 
   const citizenSeries = ['アテッサ', 'xC', 'シチズンコレクション'];
   if (product.brand === 'CITIZEN' && citizenSeries.some(s => product.name.includes(s))) {
-    applicable.push({ campaign_id: 'citizen_warranty' });
+      applicable.push({ campaign_id: 'citizen_warranty' });
   } else {
-    nonApplicable.push({ campaign_id: 'citizen_warranty' });
+      nonApplicable.push({ campaign_id: 'citizen_warranty' });
   }
 
   if (product.brand === 'CITIZEN') {
-    applicable.push({ campaign_id: 'citizen_interest_free' });
+      applicable.push({ campaign_id: 'citizen_interest_free' });
   } else {
-    nonApplicable.push({ campaign_id: 'citizen_interest_free' });
+      nonApplicable.push({ campaign_id: 'citizen_interest_free' });
   }
 
   applicable.push({ campaign_id: 'freshers_discount' });
 
   if (product.price >= 33000) {
-    applicable.push({ campaign_id: 'anniversary_70th' });
+      applicable.push({ campaign_id: 'anniversary_70th' });
   } else {
-    nonApplicable.push({ campaign_id: 'anniversary_70th' });
+      nonApplicable.push({ campaign_id: 'anniversary_70th' });
   }
 
   return { applicable, nonApplicable };
 }
+
 
 function onJanInput() {
   const jan = document.getElementById("janInput").value.trim();
