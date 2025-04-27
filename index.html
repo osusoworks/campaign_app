@@ -3,36 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <title>キャンペーン確認アプリ</title>
+  <script src="https://unpkg.com/html5-qrcode"></script> <!-- スキャナー用ライブラリ -->
 </head>
 <body>
   <h1>JANコードでキャンペーン判定</h1>
   <input id="janInput" placeholder="JANコードを入力またはスキャン" oninput="onJanInput()" />
+  <button onclick="startScanner()">カメラでスキャン</button>
+  <div id="scanner" style="width: 300px; height: 300px; margin-top: 10px;"></div>
   <div id="result"></div>
 
 <script>
 const productsData = [
-  {
-    "jan": "4954628461612",
-    "name": "SBTM327",
-    "price": 68200,
-    "brand": "SEIKO"
-  },
-  {
-    "jan": "4549526370915",
-    "name": "DW-H5600-1A2JR",
-    "price": 44000,
-    "brand": "CASIO"
-  },
-  {
-    "jan": "4974375472365",
-    "name": "AS1060-54A",
-    "price": 44000,
-    "brand": "CITIZEN"
-  }
-  // 必要に応じて他のデータを追加可能
+  { "jan": "4954628461612", "name": "SBTM327", "price": 68200, "brand": "SEIKO" },
+  { "jan": "4549526370915", "name": "DW-H5600-1A2JR", "price": 44000, "brand": "CASIO" },
+  { "jan": "4974375472365", "name": "AS1060-54A", "price": 44000, "brand": "CITIZEN" }
 ];
 
-// CSVファイルから読み込んだ商品データを格納する配列
 let csvProductsData = [];
 
 const campaignsData = [
@@ -43,11 +29,6 @@ const campaignsData = [
   { id: "anniversary_70th", name: "70周年特招会", discount_rate: 0.15, reason: "33,000円以上の商品に適用" }
 ];
 
-/**
- * 商品に適用されるキャンペーンを取得する関数
- * @param {object} product - 商品情報
- * @returns {object} - 適用されるキャンペーンと適用されないキャンペーンの配列
- */
 function getCampaignApplicability(product) {
   const applicable = [];
   const nonApplicable = [];
@@ -86,30 +67,18 @@ function getCampaignApplicability(product) {
   return { applicable, nonApplicable };
 }
 
-/**
- * 割引額を計算する関数
- * @param {number} price - 商品価格
- * @param {object} campaign - キャンペーン情報
- * @returns {number} - 割引額
- */
 function calculateDiscount(price, campaign) {
   return price * campaign.discount_rate;
 }
 
-/**
- * JANコード入力時の処理を行う関数
- */
 function onJanInput() {
   const jan = document.getElementById("janInput").value.trim();
   console.log("入力されたJANコード:", jan);
 
-  // productsData と csvProductsData の両方から商品を検索
   let product = productsData.find(p => p.jan === jan);
   if (!product) {
     product = csvProductsData.find(p => p.jan === jan);
   }
-
-  console.log("見つかった商品:", product);
 
   const resultDiv = document.getElementById("result");
   resultDiv.innerHTML = "";
@@ -121,7 +90,6 @@ function onJanInput() {
   }
 
   const { applicable, nonApplicable } = getCampaignApplicability(product);
-  console.log("適用キャンペーン:", applicable, "非適用キャンペーン:", nonApplicable);
 
   const name = product.name;
   const brand = product.brand;
@@ -154,9 +122,27 @@ function onJanInput() {
   resultDiv.innerHTML = html;
 }
 
-/**
- * CSVデータを読み込む関数（非同期）
- */
+// 📸 カメラスキャン機能
+function startScanner() {
+  const scanner = new Html5QrcodeScanner(
+    "scanner",
+    { fps: 10, qrbox: 250 },
+    false
+  );
+
+  scanner.render(
+    (decodedText) => {
+      document.getElementById("janInput").value = decodedText;
+      scanner.clear();
+      document.getElementById("scanner").innerHTML = "";
+      onJanInput();
+    },
+    (errorMessage) => {
+      console.warn("スキャンエラー:", errorMessage);
+    }
+  );
+}
+
 async function loadCsvData() {
   try {
     const response = await fetch('130.csv');
@@ -171,12 +157,8 @@ async function loadCsvData() {
   }
 }
 
-/**
- * CSVデータを解析して配列に格納する関数
- * @param {string} csv - CSVデータ
- */
 function parseCsvData(csv) {
-  csvProductsData = []; // 既存のデータをクリア
+  csvProductsData = [];
   const lines = csv.split('\n');
   const headers = lines[0].split(',').map(header => header.trim());
 
@@ -200,7 +182,6 @@ function parseCsvData(csv) {
   console.log("CSVデータ解析完了:", csvProductsData);
 }
 
-// ページ読み込み時にCSVデータを読み込む
 window.onload = loadCsvData;
 </script>
 </body>
