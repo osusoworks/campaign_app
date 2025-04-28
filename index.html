@@ -2,187 +2,70 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>キャンペーン確認アプリ</title>
-  <script src="https://unpkg.com/html5-qrcode"></script> <!-- スキャナー用ライブラリ -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>キャンペーンスキャナー</title>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    #result { margin-top: 20px; font-size: 1.5em; }
+    #campaign-name { font-size: 2em; font-weight: bold; margin-bottom: 10px; }
+    #operation { font-size: 1.2em; white-space: pre-wrap; }
+    #reader { width: 100%; max-width: 500px; margin: auto; }
+  </style>
 </head>
 <body>
-  <h1>JANコードでキャンペーン判定</h1>
-  <input id="janInput" placeholder="JANコードを入力またはスキャン" oninput="onJanInput()" />
-  <button onclick="startScanner()">カメラでスキャン</button>
-  <div id="scanner" style="width: 300px; height: 300px; margin-top: 10px;"></div>
-  <div id="result"></div>
+  <h1>キャンペーンスキャナー</h1>
+  <div id="reader"></div>
+  <div id="result">
+    <div id="campaign-name"></div>
+    <div id="operation"></div>
+  </div>
 
 <script>
-const productsData = [
-  { "jan": "4954628461612", "name": "SBTM327", "price": 68200, "brand": "SEIKO" },
-  { "jan": "4549526370915", "name": "DW-H5600-1A2JR", "price": 44000, "brand": "CASIO" },
-  { "jan": "4974375472365", "name": "AS1060-54A", "price": 44000, "brand": "CITIZEN" }
-];
+let campaigns = [];
 
-let csvProductsData = [];
+// CSV読み込み
+document.addEventListener("DOMContentLoaded", async () => {
+  const response = await fetch("campaigns.csv");
+  const csvText = await response.text();
+  campaigns = parseCsv(csvText);
 
-const campaignsData = [
-  { id: "casio_warranty", name: "カシオ保証延長", discount_rate: 0.05, reason: "カシオ製品（一部除く）に適用" },
-  { id: "citizen_warranty", name: "シチズン保証延長", discount_rate: 0.03, reason: "シチズン製品（一部除く）に適用" },
-  { id: "citizen_interest_free", name: "シチズン分割無金利", discount_rate: 0, reason: "シチズン製品に適用" },
-  { id: "freshers_discount", name: "フレッシャーズ割", discount_rate: 0.10, reason: "新社会人・学生に適用" },
-  { id: "anniversary_70th", name: "70周年特招会", discount_rate: 0.15, reason: "33,000円以上の商品に適用" }
-];
+  // QRコードスキャナー初期化
+  const html5QrCode = new Html5Qrcode("reader");
+  const config = { fps: 10, qrbox: 250, experimentalFeatures: { useBarCodeDetectorIfSupported: true } };
 
-function getCampaignApplicability(product) {
-  const applicable = [];
-  const nonApplicable = [];
-  const gshockModels = ['GMC-B2100', 'GMW-B5000', 'GM-B2100'];
-
-  if (product.brand === 'CASIO' &&
-      (product.name.includes('エディフィス') ||
-       (product.name.includes('G-SHOCK') && gshockModels.some(m => product.name.includes(m))) ||
-       product.name.includes('オシアナス'))) {
-    applicable.push({ campaign_id: 'casio_warranty' });
-  } else {
-    nonApplicable.push({ campaign_id: 'casio_warranty' });
-  }
-
-  const citizenSeries = ['アテッサ', 'xC', 'シチズンコレクション'];
-  if (product.brand === 'CITIZEN' && citizenSeries.some(s => product.name.includes(s))) {
-    applicable.push({ campaign_id: 'citizen_warranty' });
-  } else {
-    nonApplicable.push({ campaign_id: 'citizen_warranty' });
-  }
-
-  if (product.brand === 'CITIZEN') {
-    applicable.push({ campaign_id: 'citizen_interest_free' });
-  } else {
-    nonApplicable.push({ campaign_id: 'citizen_interest_free' });
-  }
-
-  applicable.push({ campaign_id: 'freshers_discount' });
-
-  if (product.price >= 33000) {
-    applicable.push({ campaign_id: 'anniversary_70th' });
-  } else {
-    nonApplicable.push({ campaign_id: 'anniversary_70th' });
-  }
-
-  return { applicable, nonApplicable };
-}
-
-function calculateDiscount(price, campaign) {
-  return price * campaign.discount_rate;
-}
-
-function onJanInput() {
-  const jan = document.getElementById("janInput").value.trim();
-  console.log("入力されたJANコード:", jan);
-
-  let product = productsData.find(p => p.jan === jan);
-  if (!product) {
-    product = csvProductsData.find(p => p.jan === jan);
-  }
-
-  const resultDiv = document.getElementById("result");
-  resultDiv.innerHTML = "";
-
-  if (!product) {
-    resultDiv.innerHTML = "<p>該当商品が見つかりません。</p>";
-    console.log("商品が見つかりませんでした");
-    return;
-  }
-
-  const { applicable, nonApplicable } = getCampaignApplicability(product);
-
-  const name = product.name;
-  const brand = product.brand;
-  const price = product.price;
-
-  let html = `<h2>${brand}</h2><p>商品名: ${name} / ブランド: ${brand} / 税込価格: ¥${price.toLocaleString()}</p>`;
-
-  html += "<h3>適用されるキャンペーン</h3><ul>";
-  applicable.forEach(c => {
-    const campaign = campaignsData.find(cd => cd.id === c.campaign_id);
-    const discount = calculateDiscount(price, campaign);
-    const discountedPrice = price - discount;
-    html += `
-      <li>
-        ${campaign.name} (割引額: ¥${discount.toLocaleString()}, 
-        割引後価格: ¥${discountedPrice.toLocaleString()}, 
-        理由: ${campaign.reason})
-      </li>
-    `;
+  Html5Qrcode.getCameras().then(cameras => {
+    if (cameras && cameras.length) {
+      html5QrCode.start({ facingMode: { exact: "environment" } }, config, onScanSuccess);
+    }
   });
-  html += "</ul>";
+});
 
-  html += "<h3>対象外のキャンペーン</h3><ul>";
-  nonApplicable.forEach(c => {
-    const campaign = campaignsData.find(cd => cd.id === c.campaign_id);
-    html += `<li>${campaign.name} (理由: ${campaign.reason})</li>`;
+function parseCsv(text) {
+  const lines = text.trim().split("\n");
+  const headers = lines[0].split(",").map(h => h.trim());
+  return lines.slice(1).map(line => {
+    const values = line.split(",").map(v => v.trim());
+    let obj = {};
+    headers.forEach((h, i) => obj[h] = values[i]);
+    return obj;
   });
-  html += "</ul>";
-
-  resultDiv.innerHTML = html;
 }
 
-// 📸 カメラスキャン機能
-function startScanner() {
-  const scanner = new Html5QrcodeScanner(
-    "scanner",
-    { fps: 10, qrbox: 250 },
-    false
-  );
+function onScanSuccess(decodedText) {
+  console.log("読み取ったJANコード:", decodedText);
 
-  scanner.render(
-    (decodedText) => {
-      document.getElementById("janInput").value = decodedText;
-      scanner.clear();
-      document.getElementById("scanner").innerHTML = "";
-      onJanInput();
-    },
-    (errorMessage) => {
-      console.warn("スキャンエラー:", errorMessage);
-    }
-  );
-}
+  const match = campaigns.find(c => c.jan && c.jan === decodedText);
 
-async function loadCsvData() {
-  try {
-    const response = await fetch('130.csv');
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const csv = await response.text();
-    parseCsvData(csv);
-  } catch (error) {
-    console.error('CSVファイルの読み込みエラー:', error);
-    alert('CSVファイルの読み込みに失敗しました。');
+  if (match) {
+    document.getElementById("campaign-name").innerText = match.name;
+    document.getElementById("operation").innerText = match.operation;
+  } else {
+    document.getElementById("campaign-name").innerText = "対象キャンペーンなし";
+    document.getElementById("operation").innerText = "";
   }
 }
-
-function parseCsvData(csv) {
-  csvProductsData = [];
-  const lines = csv.split('\n');
-  const headers = lines[0].split(',').map(header => header.trim());
-
-  for (let i = 1; i < lines.length; i++) {
-    const data = lines[i].split(',').map(data => data.trim());
-    if (data.length === headers.length) {
-      let product = {};
-      for (let j = 0; j < headers.length; j++) {
-        product[headers[j]] = data[j];
-      }
-      if (product["PLUコード"] && product["商品名称"] && product["売価"]) {
-        csvProductsData.push({
-          jan: product["PLUコード"],
-          name: product["商品名称"],
-          price: parseFloat(product["売価"]),
-          brand: product["メーカー名"] || "不明"
-        });
-      }
-    }
-  }
-  console.log("CSVデータ解析完了:", csvProductsData);
-}
-
-window.onload = loadCsvData;
 </script>
+
 </body>
 </html>
