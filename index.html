@@ -16,33 +16,38 @@
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
+      overflow: hidden;
     }
     #reader {
       width: 40vw;
-      max-width: 400px;
+      max-width: 300px;
     }
     #result {
-      width: 50vw;
+      width: 55vw;
       max-width: 500px;
       background: white;
       border-radius: 8px;
-      padding: 16px;
+      padding: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       text-align: left;
     }
     #campaign-name {
-      font-size: 1.6em;
+      font-size: 1.4em;
       font-weight: bold;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+      word-wrap: break-word;
     }
     #operation {
-      font-size: 1.1em;
+      font-size: 1em;
       white-space: pre-wrap;
+      word-wrap: break-word;
     }
     #camera-toggle {
       position: absolute;
-      top: 10px;
-      left: 10px;
+      top: 6px;
+      left: 6px;
+      font-size: 0.8em;
+      padding: 4px 6px;
     }
   </style>
 </head>
@@ -99,7 +104,7 @@ async function startCamera() {
   html5QrCode = new Html5Qrcode("reader");
   const cameraConfig = {
     fps: 10,
-    qrbox: { width: 250, height: 100 },
+    qrbox: { width: 200, height: 60 },
     experimentalFeatures: { useBarCodeDetectorIfSupported: true }
   };
   const facingMode = useFrontCamera ? "user" : "environment";
