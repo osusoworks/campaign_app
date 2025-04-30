@@ -2,19 +2,52 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>キャンペーンスキャナー</title>
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-    #result { margin-top: 20px; font-size: 1.5em; }
-    #campaign-name { font-size: 2em; font-weight: bold; margin-bottom: 10px; }
-    #operation { font-size: 1.2em; white-space: pre-wrap; }
-    #reader { width: 100%; max-width: 500px; margin: auto; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+    }
+    #reader {
+      width: 40vw;
+      max-width: 400px;
+    }
+    #result {
+      width: 50vw;
+      max-width: 500px;
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+    #campaign-name {
+      font-size: 1.6em;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+    #operation {
+      font-size: 1.1em;
+      white-space: pre-wrap;
+    }
+    #camera-toggle {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
   </style>
 </head>
 <body>
-  <h1>キャンペーンスキャナー</h1>
+  <button id="camera-toggle">カメラ切替</button>
   <div id="reader"></div>
   <div id="result">
     <div id="campaign-name"></div>
@@ -23,23 +56,15 @@
 
 <script>
 let campaigns = [];
+let useFrontCamera = false;
+let html5QrCode;
 
 // CSV読み込み
-document.addEventListener("DOMContentLoaded", async () => {
+async function loadCsv() {
   const response = await fetch("campaigns.csv");
   const csvText = await response.text();
   campaigns = parseCsv(csvText);
-
-  // QRコードスキャナー初期化
-  const html5QrCode = new Html5Qrcode("reader");
-  const config = { fps: 10, qrbox: 250, experimentalFeatures: { useBarCodeDetectorIfSupported: true } };
-
-  Html5Qrcode.getCameras().then(cameras => {
-    if (cameras && cameras.length) {
-      html5QrCode.start({ facingMode: { exact: "environment" } }, config, onScanSuccess);
-    }
-  });
-});
+}
 
 function parseCsv(text) {
   const lines = text.trim().split("\n");
@@ -53,9 +78,10 @@ function parseCsv(text) {
 }
 
 function onScanSuccess(decodedText) {
-  console.log("読み取ったJANコード:", decodedText);
+  const cleanedText = decodedText.trim();
+  console.log("読み取ったJANコード:", cleanedText);
 
-  const match = campaigns.find(c => c.jan && c.jan === decodedText);
+  const match = campaigns.find(c => c.jan && c.jan === cleanedText);
 
   if (match) {
     document.getElementById("campaign-name").innerText = match.name;
@@ -65,7 +91,30 @@ function onScanSuccess(decodedText) {
     document.getElementById("operation").innerText = "";
   }
 }
-</script>
 
+async function startCamera() {
+  if (html5QrCode) {
+    await html5QrCode.stop();
+  }
+  html5QrCode = new Html5Qrcode("reader");
+  const cameraConfig = {
+    fps: 10,
+    qrbox: { width: 250, height: 100 },
+    experimentalFeatures: { useBarCodeDetectorIfSupported: true }
+  };
+  const facingMode = useFrontCamera ? "user" : "environment";
+  await html5QrCode.start({ facingMode }, cameraConfig, onScanSuccess);
+}
+
+document.getElementById("camera-toggle").addEventListener("click", () => {
+  useFrontCamera = !useFrontCamera;
+  startCamera();
+});
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadCsv();
+  startCamera();
+});
+</script>
 </body>
 </html>
