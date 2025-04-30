@@ -19,17 +19,18 @@
       overflow: hidden;
     }
     #reader {
-      width: 30vw;
-      max-width: 240px;
+      width: 180px;
+      height: 60px;
       margin: 10px;
+      background-color: black;
     }
     #result {
-      width: 65vw;
-      max-width: 500px;
+      flex: 1;
       background: white;
       border-radius: 8px;
       padding: 12px;
       margin-top: 10px;
+      margin-left: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       text-align: left;
     }
@@ -106,7 +107,7 @@ async function startCamera() {
   html5QrCode = new Html5Qrcode("reader");
   const cameraConfig = {
     fps: 10,
-    qrbox: { width: 160, height: 50 },
+    qrbox: { width: 180, height: 60 },
     experimentalFeatures: { useBarCodeDetectorIfSupported: true }
   };
   const facingMode = useFrontCamera ? "user" : "environment";
